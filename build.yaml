@@ -1,0 +1,15 @@
+---
+name: "Session Cleaner"
+guid: "EC9E2A74-1311-4A14-B302-158E3D95FD1D"
+version: "1.0.0.0"
+targetAbi: "10.7.0.0"
+framework: "net5.0"
+owner: "crobibero"
+overview: "Removes old sessions (devices)."
+description: >
+  Removes old sessions (devices).
+category: "General"
+artifacts:
+- "Jellyfin.Plugin.SessionCleaner.dll"
+changelog: >
+  Initial release.
