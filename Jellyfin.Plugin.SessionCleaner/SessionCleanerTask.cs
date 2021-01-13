@@ -61,8 +61,7 @@ namespace Jellyfin.Plugin.DeviceCleaner
         {
             var expireDays = SessionCleanerPlugin.Instance?.Configuration.Days
                              ?? throw new Exception("Plugin instance is null");
-            var expireDate = DateTime.UtcNow.AddDays(expireDays);
-
+            var expireDate = DateTime.UtcNow.AddDays(expireDays * -1);
             var sessions = _authenticationRepository.Get(new AuthenticationInfoQuery
             {
                 HasUser = true
