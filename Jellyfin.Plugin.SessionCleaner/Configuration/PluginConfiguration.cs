@@ -9,8 +9,7 @@ namespace Jellyfin.Plugin.DeviceCleaner.Configuration
     {
         /// <summary>
         /// Gets or sets the amount of days a device should be kept.
-        /// TODO allow user to configure.
         /// </summary>
-        public int Days { get; set; } = 20;
+        public int Days { get; set; } = 30;
     }
 }
