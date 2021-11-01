@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Jellyfin.Plugin.DeviceCleaner.Configuration;
+using Jellyfin.Plugin.SessionCleaner.Configuration;
 using MediaBrowser.Common.Configuration;
 using MediaBrowser.Common.Plugins;
 using MediaBrowser.Model.Plugins;
 using MediaBrowser.Model.Serialization;
 
-namespace Jellyfin.Plugin.DeviceCleaner
+namespace Jellyfin.Plugin.SessionCleaner
 {
     /// <summary>
     /// Plugin entrypoint.

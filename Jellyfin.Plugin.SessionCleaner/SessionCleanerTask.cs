@@ -3,36 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MediaBrowser.Controller.Security;
+using Jellyfin.Data.Queries;
+using MediaBrowser.Controller.Devices;
 using MediaBrowser.Controller.Session;
 using MediaBrowser.Model.Globalization;
 using MediaBrowser.Model.Tasks;
 
-namespace Jellyfin.Plugin.DeviceCleaner
+namespace Jellyfin.Plugin.SessionCleaner
 {
     /// <summary>
     /// Device cleaner task.
     /// </summary>
     public class SessionCleanerTask : IScheduledTask, IConfigurableScheduledTask
     {
-        private readonly IAuthenticationRepository _authenticationRepository;
+        private readonly IDeviceManager _deviceManager;
         private readonly ISessionManager _sessionManager;
         private readonly ILocalizationManager _localizationManager;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SessionCleanerTask"/> class.
         /// </summary>
-        /// <param name="authenticationRepository">Instance of the <see cref="IAuthenticationRepository"/> interface.</param>
         /// <param name="sessionManager">Instance of the <see cref="ISessionManager"/> interface.</param>
         /// <param name="localizationManager">Instance of the <see cref="ILocalizationManager"/> interface.</param>
+        /// <param name="deviceManager">Instance of the <see cref="IDeviceManager"/> interface.</param>
         public SessionCleanerTask(
-            IAuthenticationRepository authenticationRepository,
             ISessionManager sessionManager,
-            ILocalizationManager localizationManager)
+            ILocalizationManager localizationManager,
+            IDeviceManager deviceManager)
         {
-            _authenticationRepository = authenticationRepository;
             _sessionManager = sessionManager;
             _localizationManager = localizationManager;
+            _deviceManager = deviceManager;
         }
 
         /// <inheritdoc />
@@ -57,30 +58,27 @@ namespace Jellyfin.Plugin.DeviceCleaner
         public string Category => _localizationManager.GetLocalizedString("TasksMaintenanceCategory");
 
         /// <inheritdoc />
-        public Task Execute(CancellationToken cancellationToken, IProgress<double> progress)
+        public async Task Execute(CancellationToken cancellationToken, IProgress<double> progress)
         {
             var expireDays = SessionCleanerPlugin.Instance?.Configuration.Days
                              ?? throw new Exception("Plugin instance is null");
             var expireDate = DateTime.UtcNow.AddDays(expireDays * -1);
-            var sessions = _authenticationRepository.Get(new AuthenticationInfoQuery
-            {
-                HasUser = true
-            })?.Items;
+            var deviceResult = await _deviceManager.GetDevices(new DeviceQuery())
+                .ConfigureAwait(false);
+            var devices = deviceResult?.Items;
 
-            if (sessions == null)
+            if (devices is null)
             {
-                return Task.CompletedTask;
+                return;
             }
 
-            foreach (var session in sessions)
+            foreach (var device in devices)
             {
-                if (session.DateLastActivity < expireDate)
+                if (device.DateLastActivity < expireDate)
                 {
-                    _sessionManager.Logout(session);
+                    await _sessionManager.Logout(device).ConfigureAwait(false);
                 }
             }
-
-            return Task.CompletedTask;
         }
 
         /// <inheritdoc />
