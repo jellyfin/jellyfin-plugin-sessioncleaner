@@ -58,7 +58,7 @@ public class SessionCleanerTask : IScheduledTask, IConfigurableScheduledTask
     public string Category => _localizationManager.GetLocalizedString("TasksMaintenanceCategory");
 
     /// <inheritdoc />
-    public async Task Execute(CancellationToken cancellationToken, IProgress<double> progress)
+    public async Task ExecuteAsync(IProgress<double> progress, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(SessionCleanerPlugin.Instance?.Configuration);
         var expireDays = SessionCleanerPlugin.Instance.Configuration.Days;
