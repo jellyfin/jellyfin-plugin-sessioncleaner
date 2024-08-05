@@ -63,8 +63,7 @@ public class SessionCleanerTask : IScheduledTask, IConfigurableScheduledTask
         ArgumentNullException.ThrowIfNull(SessionCleanerPlugin.Instance?.Configuration);
         var expireDays = SessionCleanerPlugin.Instance.Configuration.Days;
         var expireDate = DateTime.UtcNow.AddDays(expireDays * -1);
-        var deviceResult = await _deviceManager.GetDevices(new DeviceQuery())
-            .ConfigureAwait(false);
+        var deviceResult = _deviceManager.GetDevices(new DeviceQuery());
         var devices = deviceResult?.Items;
 
         if (devices is null)
