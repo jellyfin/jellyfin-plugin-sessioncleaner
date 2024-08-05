@@ -1,8 +1,8 @@
 ---
 name: "Session Cleaner"
 guid: "EC9E2A74-1311-4A14-B302-158E3D95FD1D"
-version: 3
-targetAbi: "10.9.0.0"
+version: 4
+targetAbi: "10.9.9.0"
 framework: "net8.0"
 owner: "jellyfin"
 overview: "Removes old sessions (devices)."
@@ -13,15 +13,4 @@ category: "General"
 artifacts:
   - "Jellyfin.Plugin.SessionCleaner.dll"
 changelog: |-
-  - 10.9 (#19) @crobibero
-
-  ### Code or Repo Maintenance ###
-  - Update link to Jellyfin website (#17) @methbkts
-  - chore(deps): bump StyleCop.Analyzers from 1.2.0-beta.406 to 1.2.0-beta.435 (#11) @dependabot
-
-  ### Dependency updates ###
-  - chore(deps): bump StyleCop.Analyzers from 1.2.0-beta.406 to 1.2.0-beta.435 (#11) @dependabot
-  - chore(deps): update dependency stylecop.analyzers to v1.2.0-beta.435 (#14) @renovate
-
-  ### CI & build changes ###
-  - fix: meta ci workflows (#12) @h1dden-da3m0n
+  - Fixes for Jellyfin 10.9.9 (#21) @crobibero
