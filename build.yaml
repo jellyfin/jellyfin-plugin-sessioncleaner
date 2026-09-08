@@ -1,7 +1,7 @@
 ---
 name: "Session Cleaner"
 guid: "EC9E2A74-1311-4A14-B302-158E3D95FD1D"
-version: 5
+version: 6
 targetAbi: "12.0.0.0"
 framework: "net10.0"
 owner: "jellyfin"
@@ -13,4 +13,8 @@ category: "Administration"
 artifacts:
   - "Jellyfin.Plugin.SessionCleaner.dll"
 changelog: |-
-  - Jellyfin 10.11 support (#25) @crobibero
+  - Unstable: Update to latest Jellyfin preview packages (#32) @crobibero, @jellyfin-bot
+  - add emby-button class to the help button (#26) @Krafting
+
+  ### Dependency updates ###
+  - Update dependency StyleCop.Analyzers to 1.2.0-beta.556 (#33) [@renovate[bot]](https://github.com/apps/renovate)
